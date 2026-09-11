@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Create Settlement";
+}
+
+<h2>Create Settlement</h2>
+<p class="text-muted">Uses the confirmed formula: Net = Gross − Maintenance, Fee = Net × 12%, Owner Payout = Net − Fee. Supports pro-rata.</p>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label class="form-label">Lease</label>
+        <select name="leaseId" class="form-select" asp-items="ViewBag.Leases" required></select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Maintenance Costs (R)</label>
+        <input type="number" name="maintenanceCosts" class="form-control" step="0.01" min="0" value="0" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Days Occupied (1–31)</label>
+        <input type="number" name="daysOccupied" class="form-control" min="1" max="31" value="30" required />
+        <div class="form-text">30 = full month. Lower values trigger pro-rata calculation.</div>
+    </div>
+    <button type="submit" class="btn btn-success">Calculate &amp; Create + Generate Crypto Invoice</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

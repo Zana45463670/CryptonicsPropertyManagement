@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Cryptonics Property Management";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4">Cryptonics Property Management</h1>
+    <p class="lead">Modern property management with crypto settlement payments</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Properties</h5>
+                <p class="card-text">Manage property listings, vacancy status and owner links.</p>
+                <a asp-controller="Properties" asp-action="Index" class="btn btn-primary">Go to Properties</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Owners</h5>
+                <p class="card-text">CRUD for property owners.</p>
+                <a asp-controller="Owners" asp-action="Index" class="btn btn-primary">Go to Owners</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Tenants + KYC</h5>
+                <p class="card-text">Tenant records and simulated KYC verification.</p>
+                <a asp-controller="Tenants" asp-action="Index" class="btn btn-primary">Go to Tenants</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Settlements</h5>
+                <p class="card-text">Calculate pro-rata settlements and generate unique crypto invoice links.</p>
+                <a asp-controller="Settlements" asp-action="Index" class="btn btn-success">Go to Settlements</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Co-Host Report</h5>
+                <p class="card-text">Occupancy performance by property manager with Chart.js.</p>
+                <a asp-controller="Reports" asp-action="CoHostPerformance" class="btn btn-info">View Report</a>
+            </div>
+        </div>
+    </div>
+</div>

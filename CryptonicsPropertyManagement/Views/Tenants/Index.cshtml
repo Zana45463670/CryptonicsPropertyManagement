@@ -1,0 +1,58 @@
+@model IEnumerable<CryptonicsPropertyManagement.Models.Entities.Tenant>
+@{
+    ViewData["Title"] = "Tenants";
+}
+
+<h2>Tenants</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["KycResult"] != null)
+{
+    var status = TempData["KycResult"]?.ToString();
+    var css = status == "Approved" ? "alert-success" : "alert-danger";
+    <div class="alert @css">
+        <strong>KYC @status:</strong> @TempData["KycMessage"]
+    </div>
+}
+
+<p><a asp-action="Create" class="btn btn-primary">Create New</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Income</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>@item.TenantId</td>
+            <td>@item.FullName</td>
+            <td>@item.EmailAddress</td>
+            <td>R @item.DeclaredMonthlyIncome.ToString("N2")</td>
+            <td>
+                <span class="badge @(item.VerificationStatus == "Approved" ? "bg-success" : item.VerificationStatus == "Declined" ? "bg-danger" : "bg-secondary")">
+                    @item.VerificationStatus
+                </span>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TenantId">Edit</a> |
+                <form asp-action="RunKyc" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@item.TenantId" />
+                    <button type="submit" class="btn btn-sm btn-outline-primary">Run KYC</button>
+                </form> |
+                <a asp-action="Delete" asp-route-id="@item.TenantId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

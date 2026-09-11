@@ -1,0 +1,33 @@
+@model CryptonicsPropertyManagement.Models.Entities.Property
+@{
+    ViewData["Title"] = "Create Property";
+}
+
+<h2>Create Property</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="PropertyDescription" class="form-label"></label>
+        <input asp-for="PropertyDescription" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="PhysicalAddress" class="form-label"></label>
+        <input asp-for="PhysicalAddress" class="form-control" />
+        <span asp-validation-for="PhysicalAddress" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="OwnerId" class="form-label">Owner</label>
+        <select asp-for="OwnerId" class="form-select" asp-items="ViewBag.Owners"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MonthlyRent" class="form-label"></label>
+        <input asp-for="MonthlyRent" class="form-control" />
+    </div>
+    <div class="mb-3 form-check">
+        <input asp-for="VacancyStatus" class="form-check-input" />
+        <label asp-for="VacancyStatus" class="form-check-label">Vacant</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

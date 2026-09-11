@@ -1,0 +1,59 @@
+@model IEnumerable<CryptonicsPropertyManagement.Models.Entities.Settlement>
+@{
+    ViewData["Title"] = "Settlements";
+}
+
+<h2>Settlements</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["InvoiceLink"] != null)
+{
+    <div class="alert alert-info">
+        <strong>Crypto Invoice Link:</strong>
+        <a href="@TempData["InvoiceLink"]" target="_blank">@TempData["InvoiceLink"]</a>
+    </div>
+}
+
+<p><a asp-action="Create" class="btn btn-success">Create Settlement</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Lease</th>
+            <th>Gross Rent</th>
+            <th>Maintenance</th>
+            <th>Net</th>
+            <th>Mgmt Fee (12%)</th>
+            <th>Owner Payout</th>
+            <th>Days</th>
+            <th>Date</th>
+            <th>Crypto Link</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>@item.SettlementId</td>
+            <td>#@item.LeaseId</td>
+            <td>R @item.GrossRent.ToString("N2")</td>
+            <td>R @item.MaintenanceCosts.ToString("N2")</td>
+            <td>R @item.NetAmount.ToString("N2")</td>
+            <td>R @item.ManagementFee.ToString("N2")</td>
+            <td><strong>R @item.OwnerPayout.ToString("N2")</strong></td>
+            <td>@item.DaysOccupied</td>
+            <td>@item.SettlementDate.ToString("dd MMM yyyy")</td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.CryptoInvoiceLink))
+                {
+                    <a href="@item.CryptoInvoiceLink" target="_blank" class="btn btn-sm btn-outline-success">Pay</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

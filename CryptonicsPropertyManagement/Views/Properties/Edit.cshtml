@@ -1,0 +1,33 @@
+@model CryptonicsPropertyManagement.Models.Entities.Property
+@{
+    ViewData["Title"] = "Edit Property";
+}
+
+<h2>Edit Property</h2>
+
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="PropertyId" />
+    <div class="mb-3">
+        <label asp-for="PropertyDescription" class="form-label"></label>
+        <input asp-for="PropertyDescription" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="PhysicalAddress" class="form-label"></label>
+        <input asp-for="PhysicalAddress" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="OwnerId" class="form-label">Owner</label>
+        <select asp-for="OwnerId" class="form-select" asp-items="ViewBag.Owners"></select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MonthlyRent" class="form-label"></label>
+        <input asp-for="MonthlyRent" class="form-control" />
+    </div>
+    <div class="mb-3 form-check">
+        <input asp-for="VacancyStatus" class="form-check-input" />
+        <label asp-for="VacancyStatus" class="form-check-label">Vacant</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

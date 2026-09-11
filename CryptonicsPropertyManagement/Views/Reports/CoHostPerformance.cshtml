@@ -1,0 +1,73 @@
+@model IEnumerable<CryptonicsPropertyManagement.Services.Interfaces.CoHostStats>
+@{
+    ViewData["Title"] = "Co-Host Performance";
+}
+
+<h2>Co-Host Performance Metrics</h2>
+
+<form method="post" class="row g-3 mb-4">
+    <div class="col-auto">
+        <label class="form-label">Start Date</label>
+        <input type="date" name="startDate" class="form-control" required />
+    </div>
+    <div class="col-auto">
+        <label class="form-label">End Date</label>
+        <input type="date" name="endDate" class="form-control" required />
+    </div>
+    <div class="col-auto align-self-end">
+        <button type="submit" class="btn btn-primary">Generate Report</button>
+    </div>
+</form>
+
+@if (ViewBag.ChartJson != null)
+{
+    <h3>@ViewBag.StartDate to @ViewBag.EndDate</h3>
+
+    <canvas id="coHostChart" style="max-height:400px;"></canvas>
+
+    <button onclick="window.print()" class="btn btn-outline-secondary mt-3">Export to PDF</button>
+
+    <table class="table table-sm mt-4">
+        <thead>
+            <tr>
+                <th>Manager</th>
+                <th>Days Occupied</th>
+                <th>Total Days</th>
+                <th>Occupancy Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ManagerName</td>
+                <td>@item.DaysOccupied</td>
+                <td>@item.TotalDays</td>
+                <td>@item.OccupancyRate%</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var d = @Html.Raw(ViewBag.ChartJson);
+        new Chart(document.getElementById('coHostChart'), {
+            type: 'bar',
+            data: {
+                labels: d.labels,
+                datasets: [{
+                    label: 'Occupancy Rate (%)',
+                    data: d.rates,
+                    backgroundColor: d.colors
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+    </script>
+}
