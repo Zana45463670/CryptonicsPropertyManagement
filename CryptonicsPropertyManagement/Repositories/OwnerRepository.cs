@@ -24,7 +24,15 @@ public class OwnerRepository : IOwnerRepository
 
     public async Task<Owner?> GetByIdAsync(int id)
     {
-        return await _context.Owners.FindAsync(id);
+        return await _context.Owners
+            .Include(o => o.Properties)
+            .FirstOrDefaultAsync(o => o.OwnerId == id);
+    }
+
+    public async Task<Owner?> GetByEmailAsync(string email)
+    {
+        return await _context.Owners
+            .FirstOrDefaultAsync(o => o.EmailAddress.ToLower() == email.ToLower());
     }
 
     public async Task<Owner> AddAsync(Owner owner)

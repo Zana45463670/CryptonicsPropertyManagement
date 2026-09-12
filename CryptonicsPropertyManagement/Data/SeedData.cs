@@ -1,4 +1,5 @@
 using CryptonicsPropertyManagement.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace CryptonicsPropertyManagement.Data;
 
@@ -8,10 +9,12 @@ public static class SeedData
     {
         if (context.Owners.Any()) return; // already seeded
 
+        var hasher = new PasswordHasher<object>();
+
         var owners = new[]
         {
-            new Owner { FirstName = "Thabo", LastName = "Molefe", EmailAddress = "thabo@example.com", PhoneNumber = "0821112233" },
-            new Owner { FirstName = "Sarah", LastName = "van der Berg", EmailAddress = "sarah@example.com", PhoneNumber = "0834445566" }
+            new Owner { FirstName = "Thabo", LastName = "Molefe", EmailAddress = "thabo@example.com", PhoneNumber = "0821112233", PasswordHash = hasher.HashPassword(null!, "Password123") },
+            new Owner { FirstName = "Sarah", LastName = "van der Berg", EmailAddress = "sarah@example.com", PhoneNumber = "0834445566", PasswordHash = hasher.HashPassword(null!, "Password123") }
         };
         context.Owners.AddRange(owners);
         context.SaveChanges();

@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Owner Login";
+    Layout = "_Layout";
+}
+
+<h2>Owner Login</h2>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p class="mb-0">@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<form method="post" asp-controller="Account" asp-action="Login">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group mb-3">
+        <label>Email Address</label>
+        <input type="email" name="email" class="form-control" required />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Log In</button>
+</form>

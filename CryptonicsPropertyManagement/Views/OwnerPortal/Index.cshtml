@@ -1,0 +1,78 @@
+﻿@model CryptonicsPropertyManagement.Models.Entities.Owner
+
+@{
+    ViewBag.Title = "My Properties";
+    Layout = "_Layout";
+}
+
+<h2>Welcome, @Model.FullName</h2>
+
+<p>
+    <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-secondary btn-sm">Log Out</a>
+</p>
+
+@{
+    var totalProperties = Model.Properties.Count;
+    var vacantCount = Model.Properties.Count(p => p.VacancyStatus);
+    var occupiedCount = totalProperties - vacantCount;
+    var totalMonthlyRent = Model.Properties.Sum(p => p.MonthlyRent);
+}
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <h5>Total Properties</h5>
+            <p class="fs-4">@totalProperties</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <h5>Occupied</h5>
+            <p class="fs-4">@occupiedCount</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <h5>Vacant</h5>
+            <p class="fs-4">@vacantCount</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <h5>Total Monthly Rent</h5>
+            <p class="fs-4">R@(totalMonthlyRent.ToString("N0"))</p>
+        </div>
+    </div>
+</div>
+
+<h4>My Properties</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Address</th>
+            <th>Monthly Rent</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var property in Model.Properties)
+        {
+            <tr>
+                <td>@property.PropertyDescription</td>
+                <td>@property.PhysicalAddress</td>
+                <td>R@(property.MonthlyRent.ToString("N0"))</td>
+                <td>
+                    @if (property.VacancyStatus)
+                    {
+                        <span class="badge bg-warning text-dark">Vacant</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Occupied</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
